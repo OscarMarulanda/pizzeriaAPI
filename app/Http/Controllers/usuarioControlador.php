@@ -6,6 +6,7 @@ use App\Http\Controllers;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class usuarioControlador extends Controller
 {
@@ -45,7 +46,7 @@ class usuarioControlador extends Controller
             [
                 'UsuarioDocumento'=>$request->UsuarioDocumento,
                 'UsuarioTelefono'=>$request->UsuarioTelefono,
-                'Contrasena'=>$request->Contrasena,
+                'Contrasena' => Hash::make($request->Contrasena),
                 'Correo'=>$request->Correo,
                 'UsuarioPrimerNombre'=>$request->UsuarioPrimerNombre,
                 'UsuarioApellido'=>$request->UsuarioApellido,
@@ -63,7 +64,8 @@ class usuarioControlador extends Controller
         }
         $data =[
             'usuario'=>$usuario,
-            'status'=> 201
+            'status'=> 201,
+            'message'=>'Usuario creado con éxito'
         ];
         return response()->json($data, 201);
     }
@@ -80,7 +82,7 @@ class usuarioControlador extends Controller
                                  ->where('Correo', $credentials['Correo'])
                                  ->first();
     
-        if ($usuario && $credentials['Contrasena'] === $usuario->Contrasena) {
+        if (($usuario && Hash::check($credentials['Contrasena'], $usuario->Contrasena)) || ($usuario && $credentials['Contrasena'] === $usuario->Contrasena)) {
            
             $token = JWTAuth::fromUser($usuario);
             return response()->json([

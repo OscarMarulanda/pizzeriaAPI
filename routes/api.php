@@ -6,6 +6,8 @@ use App\Http\Controllers\usuarioControlador;
 use App\Http\Controllers\ReservaControlador;
 use App\Http\Controllers\LineaControlador;
 use App\Http\Controllers\IngredienteControlador;
+use App\Http\Controllers\OrdenCompraControlador;
+use App\Http\Controllers\OrdenIngredienteControlador;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +33,7 @@ Route::get('/linea', [LineaControlador::class, 'index']);
 Route::post('/linea', [LineaControlador::class, 'store']);
 Route::get('/lineas/{idPedido}', [LineaControlador::class, 'getByPedido']);
 Route::get('/ingredientes', [IngredienteControlador::class, 'index']);
+Route::post('/orden-compra', [OrdenCompraControlador::class, 'store']);
+Route::post('/orden-ingrediente', [OrdenIngredienteControlador::class, 'store']);
+
 
