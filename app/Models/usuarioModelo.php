@@ -4,8 +4,9 @@ namespace App\Models;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class usuarioModelo extends Model implements JWTSubject
+class usuarioModelo extends Authenticatable implements JWTSubject
 {
     use HasFactory;
     protected $table = 'usuario';

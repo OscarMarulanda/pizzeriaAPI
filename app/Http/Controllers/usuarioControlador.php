@@ -73,16 +73,23 @@ class usuarioControlador extends Controller
     
         $credentials = $request->validate([
             'UsuarioDocumento' => 'required|string',
-            'Correo' => 'required|email',
             'Contrasena' => 'required|string',
         ]);
     
     
         $usuario = usuarioModelo::where('UsuarioDocumento', $credentials['UsuarioDocumento'])
-                                 ->where('Correo', $credentials['Correo'])
                                  ->first();
     
-        if (($usuario && Hash::check($credentials['Contrasena'], $usuario->Contrasena)) || ($usuario && $credentials['Contrasena'] === $usuario->Contrasena)) {
+        $isPasswordValid = false;
+
+        try {
+            $isPasswordValid = Hash::check($credentials['Contrasena'], $usuario->Contrasena);
+        } catch (\RuntimeException $e) {
+            // If it's not a Bcrypt hash, fallback to plain-text comparison
+            $isPasswordValid = $credentials['Contrasena'] === $usuario->Contrasena;
+        }
+        
+        if ($usuario && $isPasswordValid){
            
             $token = JWTAuth::fromUser($usuario);
             return response()->json([

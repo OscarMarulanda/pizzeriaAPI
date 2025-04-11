@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
+
 class reservaModelo extends Model
 {
     use HasFactory, Notifiable;

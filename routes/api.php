@@ -20,20 +20,22 @@ use App\Http\Controllers\OrdenIngredienteControlador;
 |
 */
 Route::post('/login',[usuarioControlador::class,'login']);
-Route::get('/pizzapaisa',[usuarioControlador::class,'index']);
 Route::post('/pizzapaisa',[usuarioControlador::class, 'store']);
-Route::get('/pizzapaisa/{UsuarioDocumento}',[usuarioControlador::class, 'show']);
-Route::put('/pizzapaisa/{UsuarioDocumento}',[usuarioControlador::class, 'update']);
-Route::delete('/pizzapaisa/{UsuarioDocumento}',[usuarioControlador::class,'destroy']);
-Route::post('/reserva', [ReservaControlador::class, 'store']);
-Route::get('/reserva', [ReservaControlador::class, 'index']);
-Route::put('/reserva', [ReservaControlador::class,'updeit']);
-Route::delete('/reserva', [ReservaControlador::class,'dilit']);
-Route::get('/linea', [LineaControlador::class, 'index']);
-Route::post('/linea', [LineaControlador::class, 'store']);
-Route::get('/lineas/{idPedido}', [LineaControlador::class, 'getByPedido']);
-Route::get('/ingredientes', [IngredienteControlador::class, 'index']);
-Route::post('/orden-compra', [OrdenCompraControlador::class, 'store']);
-Route::post('/orden-ingrediente', [OrdenIngredienteControlador::class, 'store']);
-
+Route::group(['middleware' => ['jwt.auth']], function () {
+    
+    Route::get('/pizzapaisa',[usuarioControlador::class,'index']);
+    Route::get('/pizzapaisa/{UsuarioDocumento}',[usuarioControlador::class, 'show']);
+    Route::put('/pizzapaisa/{UsuarioDocumento}',[usuarioControlador::class, 'update']);
+    Route::delete('/pizzapaisa/{UsuarioDocumento}',[usuarioControlador::class,'destroy']);
+    Route::post('/reserva', [ReservaControlador::class, 'store']);
+    Route::get('/reserva', [ReservaControlador::class, 'index']);
+    Route::put('/reserva', [ReservaControlador::class,'updeit']);
+    Route::delete('/reserva', [ReservaControlador::class,'dilit']);
+    Route::get('/linea', [LineaControlador::class, 'index']);
+    Route::post('/linea', [LineaControlador::class, 'store']);
+    Route::get('/lineas/{idPedido}', [LineaControlador::class, 'getByPedido']);
+    Route::get('/ingredientes', [IngredienteControlador::class, 'index']);
+    Route::post('/orden-compra', [OrdenCompraControlador::class, 'store']);
+    Route::post('/orden-ingrediente', [OrdenIngredienteControlador::class, 'store']);
+});
 
