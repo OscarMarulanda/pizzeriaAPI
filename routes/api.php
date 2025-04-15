@@ -8,6 +8,8 @@ use App\Http\Controllers\LineaControlador;
 use App\Http\Controllers\IngredienteControlador;
 use App\Http\Controllers\OrdenCompraControlador;
 use App\Http\Controllers\OrdenIngredienteControlador;
+use App\Http\Controllers\SaborControlador;
+use App\Http\Controllers\SaborIngredienteControlador;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +37,10 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::post('/linea', [LineaControlador::class, 'store']);
     Route::get('/lineas/{idPedido}', [LineaControlador::class, 'getByPedido']);
     Route::get('/ingredientes', [IngredienteControlador::class, 'index']);
+    Route::post('/ingredientes', [IngredienteControlador::class, 'store']);
     Route::post('/orden-compra', [OrdenCompraControlador::class, 'store']);
     Route::post('/orden-ingrediente', [OrdenIngredienteControlador::class, 'store']);
+    Route::post('/sabor', [SaborControlador::class, 'store']);
+    Route::post('/sabor-ingrediente', [SaborIngredienteControlador::class, 'store']);
 });
 

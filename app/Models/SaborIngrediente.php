@@ -6,24 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class IngredienteModelo extends Model
+class SaborIngrediente extends Model
 {
     use HasFactory;
 
-    protected $table = 'ingrediente';
+    protected $table = 'saboringrediente';
     public $timestamps = false;
-    protected $primaryKey = 'idIngrediente';
+    protected $primaryKey = '';
     public $incrementing = false;
     protected $keyType = 'string';
 
     protected $fillable = [
+        'idSabor',
         'idIngrediente',
-        'Descripcion',
-        'Existenciaskg'
+        'Cantidadkg'
     ];
-
-    public function saborIngrediente()
-    {
-        return $this->hasMany(saborIngrediente::class, 'idIngrediente', 'idIngrediente');
-    }
 }
