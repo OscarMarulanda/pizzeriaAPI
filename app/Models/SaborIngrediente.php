@@ -12,7 +12,7 @@ class SaborIngrediente extends Model
 
     protected $table = 'saboringrediente';
     public $timestamps = false;
-    protected $primaryKey = '';
+    protected $primaryKey = null;
     public $incrementing = false;
     protected $keyType = 'string';
 
