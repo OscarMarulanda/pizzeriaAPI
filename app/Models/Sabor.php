@@ -19,7 +19,8 @@ class Sabor extends Model
     protected $fillable = [
         'idSabor',
         'Nombre_Pizza',
-        'Precio_Porcion'
+        'Precio_Porcion',
+        'imageUrl'
     ];
 
     public function saborIngrediente()
