@@ -10,7 +10,9 @@ class IngredienteControlador extends Controller
 {
     public function index()
     {
-        $ingredientes = IngredienteModelo::all();
+        $ingredientes = IngredienteModelo::select('idIngrediente', 'Descripcion')
+        ->orderBy('Descripcion')
+        ->get();
 
         if ($ingredientes->isEmpty()) {
             return response()->json([

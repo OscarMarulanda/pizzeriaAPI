@@ -13,6 +13,37 @@ use Illuminate\Support\Facades\DB;
 
 class SaborControlador extends Controller
 {
+    public function index(Request $request)
+{
+    try {
+        // Get pagination parameters from request (default to page 1, 10 items per page)
+        $perPage = $request->input('per_page', 10);
+        $page = $request->input('page', 1);
+        
+        // Query with pagination
+        $sabores = Sabor::with('saborIngrediente') // Eager load relationships if needed
+            ->orderBy('idSabor', 'asc')
+            ->paginate($perPage, ['*'], 'page', $page);
+        
+        return response()->json([
+            'data' => $sabores->items(),
+            'current_page' => $sabores->currentPage(),
+            'per_page' => $sabores->perPage(),
+            'total' => $sabores->total(),
+            'last_page' => $sabores->lastPage(),
+            'status' => 200
+        ]);
+        
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => 'Error al obtener los sabores',
+            'error' => $e->getMessage(),
+            'status' => 500
+        ], 500);
+    }
+}
+
+
     public function store(Request $request){
         $validacion = Validator::make($request->all(), [
             'idSabor' => 'required|string',
